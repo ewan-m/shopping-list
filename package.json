@@ -1,16 +1,17 @@
 {
-  "name": "bespoke",
+  "name": "shopping-list",
   "version": "1.0.0",
-  "description": "social media in your own handwriting",
+  "description": "A CRUD shopping list",
   "main": "src/index.html",
   "browserslist": "> 0.25%, not dead",
+  "homepage": "/shopping-list",
+  "author": "Ewan Morrison",
+  "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html  --out-dir docs",
     "format": "prettier \"src/**\" --write"
   },
-  "author": "Ewan Morrison",
-  "license": "MIT",
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

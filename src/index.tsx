@@ -202,31 +202,38 @@ const App = () => {
 								setItemName(e.target.value);
 							}}
 						/>
-						<select className="formInput" value={itemOrderedBy} onChange={(e) => {
-							setItemOrderedBy(e.target.value);
-						}}>
+						<select
+							className="formInput"
+							value={itemOrderedBy}
+							onChange={(e) => {
+								setItemOrderedBy(e.target.value);
+							}}
+						>
 							{["Ewan", "Sofia"].map((value) => (
 								<option value={value}>{value}</option>
 							))}
 						</select>
 					</label>
 					<div>
-
-					<button className="button button__secondary button--large" onClick={e => {
-						e.preventDefault();
-						setState(State.loaded);
-					}} style={{margin: "0 0.375rem 0.375rem 0"}}>
-						Cancel
-					</button>
-					<button
-						className="button button__primary button--large"
-						onClick={(e) => {
-							e.preventDefault();
-							addItem();
-						}}
-					>
-						Add item
-					</button>
+						<button
+							className="button button__secondary button--large"
+							onClick={(e) => {
+								e.preventDefault();
+								setState(State.loaded);
+							}}
+							style={{ margin: "0 0.375rem 0.375rem 0" }}
+						>
+							Cancel
+						</button>
+						<button
+							className="button button__primary button--large"
+							onClick={(e) => {
+								e.preventDefault();
+								addItem();
+							}}
+						>
+							Add item
+						</button>
 					</div>
 				</form>
 			);
