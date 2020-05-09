@@ -1,0 +1,201 @@
+@import "./variables.scss";
+
+body {
+	font-family: system-ui, ui-sans-serif;
+	margin: 0;
+}
+
+.fadeInBottomEntrance {
+	animation: fadeInBottomEntrance 1s ease-in-out forwards;
+}
+
+@keyframes fadeInBottomEntrance {
+	0% {
+		opacity: 0;
+		transform: translateY(0.75rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.button {
+	border: none;
+	font-weight: 600;
+	border-radius: 3rem;
+	cursor: pointer;
+	box-shadow: $shadow2px;
+	display: inline-block;
+	text-decoration: none;
+	z-index: 2;
+	transition-property: transform, box-shadow;
+	transition-duration: 0.3s;
+	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	transform: scale(1);
+	padding: 0.5rem 1rem;
+
+	&__primary {
+		background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: #fff;
+	}
+
+	&__secondary {
+		background: #eee;
+		color: #333;
+		border: 1px solid #ccc;
+	}
+
+	&--large {
+		font-size: 1.5rem;
+		padding: 0.75rem 1.5rem;
+	}
+
+	&:hover,
+	&:focus {
+		transform: scale(1.05);
+		box-shadow: none;
+	}
+}
+
+.funkyOuter {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	background-color: #eee;
+	background-size: cover;
+	background-image: url(./assets/images/leone-venter-VieM9BdZKFo-unsplash.jpg);
+}
+
+.funkyInner {
+	overflow: auto;
+	max-width: 450px;
+	width: 100%;
+	max-height: 900px;
+	height: 100%;
+	background-color: #fff;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.siteHeader {
+	background-image: linear-gradient(
+		120deg,
+		rgba(232, 26, 255, 0.8) 0%,
+		rgba(240, 45, 71, 0.8) 100%
+	);
+	backdrop-filter: blur(5px);
+	padding: 1rem;
+	position: sticky;
+	top: 0;
+	border-bottom: 1px solid #222;
+
+	&__h1 {
+		margin: 0;
+		color: #fff;
+		text-align: center;
+		font-size: 2rem;
+	}
+}
+
+.siteMain {
+	flex-grow: 1;
+	scrollbar-width: thin;
+	scrollbar-color: #eee;
+	overflow-y: auto;
+	padding: 0.75rem;
+
+	&::-webkit-scrollbar {
+		width: 11px;
+	}
+	&::-webkit-scrollbar-track {
+		background-color: #eee;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: rgba(240, 45, 71, 0.8);
+	}
+}
+
+.siteFooter {
+	position: sticky;
+	bottom: 0;
+	background-color: inherit;
+}
+
+.footerNav {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+	border-top: 1px solid #ccc;
+
+	&__item {
+		width: 100%;
+		border-top: 1px solid #222;
+
+		&:first-child {
+			.footerNav__item__a {
+				border-left: none;
+			}
+		}
+
+		&__a {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			padding: 0.75rem;
+			background: #333;
+			color: #eee;
+			text-decoration: none;
+			border-left: 1px solid #222;
+			&--active {
+				background: linear-gradient(
+					-120deg,
+					rgba(232, 26, 255, 0.8) 0%,
+					rgba(240, 45, 71, 0.8) 100%
+				);
+				box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 450px) {
+	.funkyInner {
+		border-radius: 0.75rem;
+		height: calc(100vh - 3rem);
+		box-shadow: $shadow10px;
+	}
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	width: 40ch;
+	label {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1.5rem;
+		font-weight: bold;
+	}
+}
+
+.formInput {
+	margin-top: 0.375rem;
+	padding: 0.75rem;
+	border-radius: 0.375rem;
+	border: 1px solid #ccc;
+	outline: none;
+}
+
+table {
+	width: 100%;
+
+	th {
+		text-align: left;
+	}
+}
