@@ -122,6 +122,7 @@ const App = () => {
 					<label>
 						Password{" "}
 						<input
+							className="formInput"
 							value={password}
 							onChange={(e) => {
 								setPassword(e.target.value);
