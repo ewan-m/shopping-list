@@ -3,6 +3,22 @@ import { render } from "react-dom";
 import moment from "moment";
 import "./index.scss";
 
+// const mock = {
+// 	data: [
+// 		{
+// 			name: "Do we really need milk? ",
+// 			orderedBy: "Ewan",
+// 			orderedOn: "2020-05-09T15:17:02.572Z",
+// 		},
+// 		{ name: "Milk", orderedBy: "Sofia", orderedOn: "2020-05-09T15:16:29.970Z" },
+// 		{
+// 			name: "Cherries",
+// 			orderedBy: "Ewan",
+// 			orderedOn: "2020-05-09T14:42:31.002Z",
+// 		},
+// 	],
+// };
+
 interface ShoppingItem {
 	name: string;
 	orderedBy: "Ewan" | "Sofia";
@@ -149,36 +165,30 @@ const App = () => {
 		case State.loaded:
 			return (
 				<div className="fadeInBottomEntrance">
-					<table>
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Ordered by</th>
-								<th>Delete</th>
-							</tr>
-						</thead>
-						<tbody>
-							{items.map((item) => (
-								<tr>
-									<td>{item.name}</td>
-									<td>
-										{item.orderedBy} {moment(item.orderedOn).fromNow()}
-									</td>
-									<td>
-										<button
-											className="button button__secondary"
-											onClick={(e) => {
-												e.preventDefault();
-												removeItem(item);
-											}}
-										>
-											Remove item
-										</button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
+					{items.map((item) => (
+						<div className="shoppingItem">
+							<h2 className="shoppingItem__header">{item.name}</h2>
+							<div className="shoppingItem__row">
+								<p className="shoppingItem__info">
+									{item.orderedBy}{" "}
+									<span style={{ fontSize: "0.75rem" }}>
+										{" "}
+										- {moment(item.orderedOn).fromNow()}
+									</span>
+								</p>
+
+								<button
+									className="button button__secondary"
+									onClick={(e) => {
+										e.preventDefault();
+										removeItem(item);
+									}}
+								>
+									Remove item
+								</button>
+							</div>
+						</div>
+					))}
 					<button
 						className="button button__primary button--large"
 						onClick={() => {
