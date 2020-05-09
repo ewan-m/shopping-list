@@ -6,7 +6,7 @@
   "browserslist": "> 0.25%, not dead",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html  --out-dir docs",
     "format": "prettier \"src/**\" --write"
   },
   "author": "Ewan Morrison",
