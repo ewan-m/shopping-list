@@ -83,6 +83,7 @@ const App = () => {
 
 	const putData = async (items: ShoppingItem[], stateOnError: State) => {
 		try {
+			await getData();
 			const result = await fetch(
 				"https://api.jsonbin.io/b/5eb6b361a47fdd6af16043d4",
 				{
