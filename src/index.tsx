@@ -3,16 +3,26 @@ import { render } from "react-dom";
 import moment from "moment";
 import "./index.scss";
 
-const binUrl = "https://extendsclass.com/api/json-storage/bin/eecafeb";
+// const mock = {
+// 	data: [
+// 		{
+// 			name: "Do we really need milk? ",
+// 			orderedBy: "Ewan",
+// 			orderedOn: "2020-05-09T15:17:02.572Z",
+// 		},
+// 		{ name: "Milk", orderedBy: "Sofia", orderedOn: "2020-05-09T15:16:29.970Z" },
+// 		{
+// 			name: "Cherries",
+// 			orderedBy: "Ewan",
+// 			orderedOn: "2020-05-09T14:42:31.002Z",
+// 		},
+// 	],
+// };
 
 interface ShoppingItem {
+	name: string;
 	orderedBy: "Ewan" | "Sofia";
 	orderedOn: string;
-	obtained: boolean;
-}
-
-interface ShoppingList {
-	[itemName: string]: ShoppingItem;
 }
 
 enum State {
@@ -27,17 +37,15 @@ const App = () => {
 	const [state, setState] = React.useState(State.unAuthorised);
 	const [error, setError] = React.useState("");
 	const [password, setPassword] = React.useState("");
-	const [items, setItems] = React.useState({} as ShoppingList);
+	const [items, setItems] = React.useState([] as ShoppingItem[]);
 
 	const [itemName, setItemName] = React.useState("");
-	const [itemOrderedBy, setItemOrderedBy] = React.useState(
-		"Ewan" as "Ewan" | "Sofia"
-	);
+	const [itemOrderedBy, setItemOrderedBy] = React.useState("Ewan");
 
 	React.useEffect(() => {
 		const pass = localStorage.getItem("password");
 		if (pass) {
-			setState(State.loading);
+			setState(State.unAuthorised);
 			setPassword(pass);
 		}
 	}, []);
@@ -50,60 +58,49 @@ const App = () => {
 
 	const getData = async () => {
 		setError("");
-		setState(State.loading);
-		const response = (
-			await fetch(binUrl, {
-				headers: {
-					"security-key": password,
-				},
-			})
-		).json();
-		const result = await response;
-		if (result?.status === 1) {
-			setError(result.message);
-			if (result.message.toString().includes("Wrong Security key")) {
-				setState(State.unAuthorised);
-				localStorage.removeItem("password");
-			} else {
-				setState(State.loaded);
+		try {
+			setState(State.loading);
+			const response = (
+				await fetch("https://api.jsonbin.io/b/5eb6b361a47fdd6af16043d4", {
+					headers: {
+						"secret-key": password,
+					},
+				})
+			).json();
+			const result = await response;
+
+			if (!result.data) {
+				throw Error();
 			}
-		} else {
-			if (result && Object.keys(result)?.length > 0) {
-				setItems(result);
-			}
+			setItems(result.data as ShoppingItem[]);
 			setState(State.loaded);
 			localStorage.setItem("password", password);
+		} catch (error) {
+			setError(error?.message);
+			setState(State.unAuthorised);
 		}
 	};
 
-	const updateItem = async (itemName: string, item: ShoppingItem) => {
-		setError("");
-		setState(State.sending);
-		const response = (
-			await fetch(binUrl, {
-				headers: {
-					"security-key": password,
-					"content-type": "application/merge-patch+json",
-				},
-				body: JSON.stringify({ [itemName]: item }),
-				method: "PATCH",
-			})
-		).json();
-		const result = await response;
-		if (result.status === 1) {
-			setError(result?.message);
-			if (result?.message.toString().includes("Wrong Security key")) {
-				setState(State.unAuthorised);
-				localStorage.removeItem("password");
-			} else {
-				setState(State.loaded);
-			}
-		} else {
-			if (result.data) {
-				setItems(JSON.parse(result.data));
-			}
-			setState(State.loaded);
-			localStorage.setItem("password", password);
+	const putData = async (items: ShoppingItem[], stateOnError: State) => {
+		try {
+			const result = await fetch(
+				"https://api.jsonbin.io/b/5eb6b361a47fdd6af16043d4",
+				{
+					body: JSON.stringify({
+						data: items,
+					}),
+					method: "PUT",
+					headers: {
+						"content-type": "application/json",
+						"secret-key": password,
+						"versioning": "false",
+					},
+				}
+			);
+			await getData();
+		} catch (error) {
+			setState(stateOnError);
+			setError(error?.message);
 		}
 	};
 
@@ -111,17 +108,27 @@ const App = () => {
 		if (!itemName) {
 			return;
 		}
-		await updateItem(itemName, {
-			orderedOn: new Date().toISOString(),
-			obtained: false,
-			orderedBy: itemOrderedBy,
-		});
+		setState(State.addingItem);
+
+		putData(
+			[
+				{
+					name: itemName,
+					orderedBy: itemOrderedBy,
+					orderedOn: new Date().toISOString(),
+				} as ShoppingItem,
+				...items,
+			],
+			State.addingItem
+		);
 	};
 
-	const removeItem = async (key: string) => {
-		if (key in items) {
-			await updateItem(key, { ...items[key], ...{ obtained: true } });
-		}
+	const removeItem = async (item: ShoppingItem) => {
+		setState(State.loading);
+		putData(
+			items.filter((item2) => item2.name !== item.name),
+			State.loaded
+		);
 	};
 
 	switch (state) {
@@ -158,34 +165,30 @@ const App = () => {
 		case State.loaded:
 			return (
 				<div className="fadeInBottomEntrance">
-					{Object.keys(items).map((key) => {
-						return !items[key].obtained ? (
-							<div className="shoppingItem" key={key}>
-								<h2 className="shoppingItem__header">{key}</h2>
-								<div className="shoppingItem__row">
-									<p className="shoppingItem__info">
-										{items[key].orderedBy}{" "}
-										<span style={{ fontSize: "0.75rem" }}>
-											{" "}
-											- {moment(items[key].orderedOn).fromNow()}
-										</span>
-									</p>
+					{items.map((item) => (
+						<div className="shoppingItem">
+							<h2 className="shoppingItem__header">{item.name}</h2>
+							<div className="shoppingItem__row">
+								<p className="shoppingItem__info">
+									{item.orderedBy}{" "}
+									<span style={{ fontSize: "0.75rem" }}>
+										{" "}
+										- {moment(item.orderedOn).fromNow()}
+									</span>
+								</p>
 
-									<button
-										className="button button__secondary"
-										onClick={(e) => {
-											e.preventDefault();
-											removeItem(key);
-										}}
-									>
-										Remove item
-									</button>
-								</div>
+								<button
+									className="button button__secondary"
+									onClick={(e) => {
+										e.preventDefault();
+										removeItem(item);
+									}}
+								>
+									Remove item
+								</button>
 							</div>
-						) : (
-							<></>
-						);
-					})}
+						</div>
+					))}
 					<button
 						className="button button__primary button--large"
 						onClick={() => {
@@ -214,7 +217,7 @@ const App = () => {
 							className="formInput"
 							value={itemOrderedBy}
 							onChange={(e) => {
-								setItemOrderedBy(e.target.value as "Ewan" | "Sofia");
+								setItemOrderedBy(e.target.value);
 							}}
 						>
 							{["Ewan", "Sofia"].map((value) => (
@@ -247,7 +250,7 @@ const App = () => {
 			);
 
 		case State.sending:
-			return <p className="fadeInBottomEntrance">Modifying that item!</p>;
+			return <p className="fadeInBottomEntrance">Adding your item!</p>;
 		default:
 			return (
 				<p className="fadeInBottomEntrance">Woops this should never happen</p>
