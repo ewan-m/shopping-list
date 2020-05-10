@@ -60,14 +60,13 @@ const App = () => {
 		setError("");
 		try {
 			setState(State.loading);
-			const response = (
+			const result = await (
 				await fetch("https://api.jsonbin.io/b/5eb6b361a47fdd6af16043d4", {
 					headers: {
 						"secret-key": password,
 					},
 				})
 			).json();
-			const result = await response;
 
 			if (!result.data) {
 				throw Error();
@@ -83,10 +82,8 @@ const App = () => {
 
 	const putData = async (items: ShoppingItem[], stateOnError: State) => {
 		try {
-			await getData();
-			const result = await fetch(
-				"https://api.jsonbin.io/b/5eb6b361a47fdd6af16043d4",
-				{
+			const result = await (
+				await fetch("https://api.jsonbin.io/b/5eb6b361a47fdd6af16043d4", {
 					body: JSON.stringify({
 						data: items,
 					}),
@@ -96,9 +93,12 @@ const App = () => {
 						"secret-key": password,
 						"versioning": "false",
 					},
-				}
-			);
-			await getData();
+				})
+			).json();
+			if (result?.data?.data) {
+				setItems(result.data.data);
+			}
+			setState(State.loaded);
 		} catch (error) {
 			setState(stateOnError);
 			setError(error?.message);
@@ -125,7 +125,7 @@ const App = () => {
 	};
 
 	const removeItem = async (item: ShoppingItem) => {
-		setState(State.loading);
+		setState(State.sending);
 		putData(
 			items.filter((item2) => item2.name !== item.name),
 			State.loaded
@@ -161,7 +161,7 @@ const App = () => {
 			);
 
 		case State.loading:
-			return <p className="fadeInBottomEntrance">Loading the shopping list!</p>;
+			return <p className="fadeInBottomEntrance">Getting the stuff!</p>;
 
 		case State.loaded:
 			return (
@@ -182,7 +182,10 @@ const App = () => {
 									className="button button__secondary"
 									onClick={(e) => {
 										e.preventDefault();
-										removeItem(item);
+
+										(async () => await getData())().then(() => {
+											removeItem(item);
+										});
 									}}
 								>
 									Remove item
@@ -193,7 +196,9 @@ const App = () => {
 					<button
 						className="button button__primary button--large"
 						onClick={() => {
-							setState(State.addingItem);
+							(async () => await getData())().then(() => {
+								setState(State.addingItem);
+							});
 						}}
 					>
 						Add an item
@@ -251,7 +256,7 @@ const App = () => {
 			);
 
 		case State.sending:
-			return <p className="fadeInBottomEntrance">Adding your item!</p>;
+			return <p className="fadeInBottomEntrance">Doing the thing!</p>;
 		default:
 			return (
 				<p className="fadeInBottomEntrance">Woops this should never happen</p>
