@@ -19,6 +19,9 @@
 
 body {
 	font-family: "Font", system-ui, ui-sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 	font-weight: 400;
 	margin: 0;
 }
@@ -98,6 +101,18 @@ body {
 	border-radius: 0.75rem;
 	box-shadow: $shadow10px;
 	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 11px;
+	}
+	&::-webkit-scrollbar-track {
+		background-color: #eee;
+		border-radius: 0 0.75rem 0.75rem 0;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: #3d2979;
+		border-radius: 0 0.75rem 0.75rem 0;
+	}
 }
 
 .siteHeader {
@@ -123,18 +138,6 @@ body {
 .siteMain {
 	flex-grow: 1;
 	padding: 0.75rem;
-}
-
-::-webkit-scrollbar {
-	width: 11px;
-}
-::-webkit-scrollbar-track {
-	background-color: #eee;
-	border-radius: 0 0.75rem 0.75rem 0;
-}
-::-webkit-scrollbar-thumb {
-	background-color: #3d2979;
-	border-radius: 0 0.75rem 0.75rem 0;
 }
 
 .siteFooter {
