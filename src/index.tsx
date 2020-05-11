@@ -2,6 +2,7 @@ import * as React from "react";
 import { render } from "react-dom";
 import moment from "moment";
 import "./index.scss";
+import { Cat } from "./Cat";
 
 // const mock = {
 // 	data: [
@@ -170,7 +171,7 @@ const App = () => {
 					{items.map((item) => (
 						<div className="shoppingItem">
 							<div>
-								<h2 className="shoppingItem__header">{item.name}</h2>
+								<h2 className="shoppingItem__header boldText">{item.name}</h2>
 								<p className="shoppingItem__info">
 									{item.orderedBy}{" "}
 									<span style={{ fontSize: "0.75rem" }}>
@@ -209,7 +210,7 @@ const App = () => {
 		case State.addingItem:
 			return (
 				<form className="form fadeInBottomEntrance">
-					<label>
+					<label className="boldText">
 						Add a shopping item
 						<input
 							className="formInput"
@@ -268,11 +269,13 @@ const Index = () => {
 		<div className="funkyOuter">
 			<div className="funkyInner">
 				<header className="siteHeader">
-					<h1 className="siteHeader__h1">Shopping list</h1>
+					<h1 className="siteHeader__h1 boldText">Shopping list</h1>
 				</header>
 				<main className="siteMain">
 					<App />
+					<Cat />
 				</main>
+				<footer className="siteFooter">Made with ❤️ by Ewan.</footer>
 			</div>
 		</div>
 	);
