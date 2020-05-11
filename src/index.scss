@@ -1,7 +1,25 @@
 @import "./variables.scss";
 
+@font-face {
+	font-family: "Font";
+	src: url(./assets/fonts/Font_Rg.woff2);
+	font-weight: 400;
+}
+@font-face {
+	font-family: "Font";
+	src: url(./assets/fonts/Font_Bd.woff2);
+	font-weight: 600;
+}
+
+@font-face {
+	font-family: "Font";
+	src: url(./assets/fonts/Font_ExBd.woff2);
+	font-weight: 800;
+}
+
 body {
-	font-family: system-ui, ui-sans-serif;
+	font-family: "Font", system-ui, ui-sans-serif;
+	font-weight: 400;
 	margin: 0;
 }
 
@@ -36,7 +54,7 @@ body {
 	padding: 0.5rem 1rem;
 
 	&__primary {
-		background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		background-color: #326799;
 		color: #fff;
 	}
 
@@ -64,8 +82,6 @@ body {
 	justify-content: center;
 	align-items: center;
 	background-color: #eee;
-	background-size: cover;
-	background-image: url(./assets/images/leone-venter-VieM9BdZKFo-unsplash.jpg);
 }
 
 .funkyInner {
@@ -81,12 +97,7 @@ body {
 }
 
 .siteHeader {
-	background-image: linear-gradient(
-		120deg,
-		rgba(232, 26, 255, 0.8) 0%,
-		rgba(240, 45, 71, 0.8) 100%
-	);
-	backdrop-filter: blur(5px);
+	background-image: linear-gradient(160deg, #30cfd0 0%, #330867 100%);
 	padding: 1rem;
 	position: sticky;
 	top: 0;
@@ -95,8 +106,10 @@ body {
 	&__h1 {
 		margin: 0;
 		color: #fff;
-		text-align: center;
+		text-align: left;
 		font-size: 2rem;
+		font-weight: 700;
+		letter-spacing: -0.05rem;
 	}
 }
 
@@ -118,69 +131,31 @@ body {
 	}
 }
 
-.siteFooter {
-	position: sticky;
-	bottom: 0;
-	background-color: inherit;
-}
-
-.footerNav {
-	padding: 0;
-	margin: 0;
-	display: flex;
-	justify-content: space-between;
-	list-style: none;
-	border-top: 1px solid #ccc;
-
-	&__item {
-		width: 100%;
-		border-top: 1px solid #222;
-
-		&:first-child {
-			.footerNav__item__a {
-				border-left: none;
-			}
-		}
-
-		&__a {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			padding: 0.75rem;
-			background: #333;
-			color: #eee;
-			text-decoration: none;
-			border-left: 1px solid #222;
-			&--active {
-				background: linear-gradient(
-					-120deg,
-					rgba(232, 26, 255, 0.8) 0%,
-					rgba(240, 45, 71, 0.8) 100%
-				);
-				box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
-			}
-		}
-	}
-}
-
 @media only screen and (min-width: 450px) {
 	.funkyInner {
 		border-radius: 0.75rem;
 		height: calc(100vh - 3rem);
 		box-shadow: $shadow10px;
 	}
+
+	.funkyOuter {
+		background-size: cover;
+		background-image: url(./assets/images/leone-venter-VieM9BdZKFo-unsplash.jpg);
+	}
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
-	width: 40ch;
+
 	label {
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 1.5rem;
-		font-weight: bold;
+
+		font-weight: 600;
+		letter-spacing: -0.02rem;
+		font-size: 1.5rem;
 	}
 }
 
@@ -190,19 +165,21 @@ body {
 	border-radius: 0.375rem;
 	border: 1px solid #ccc;
 	outline: none;
+	max-width: 225px;
+	box-sizing: content-box;
 }
 
 .shoppingItem {
 	margin: 0 0 1.5rem;
-
-	&__row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
 	&__header {
 		margin: 0;
+		font-weight: 600;
+		letter-spacing: -0.02rem;
+		font-size: 1.5rem;
 	}
 
 	&__info {

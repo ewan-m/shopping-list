@@ -161,15 +161,16 @@ const App = () => {
 			);
 
 		case State.loading:
-			return <p className="fadeInBottomEntrance">Getting the stuff!</p>;
+		case State.sending:
+			return <></>;
 
 		case State.loaded:
 			return (
 				<div className="fadeInBottomEntrance">
 					{items.map((item) => (
 						<div className="shoppingItem">
-							<h2 className="shoppingItem__header">{item.name}</h2>
-							<div className="shoppingItem__row">
+							<div>
+								<h2 className="shoppingItem__header">{item.name}</h2>
 								<p className="shoppingItem__info">
 									{item.orderedBy}{" "}
 									<span style={{ fontSize: "0.75rem" }}>
@@ -177,20 +178,20 @@ const App = () => {
 										- {moment(item.orderedOn).fromNow()}
 									</span>
 								</p>
-
-								<button
-									className="button button__secondary"
-									onClick={(e) => {
-										e.preventDefault();
-
-										(async () => await getData())().then(() => {
-											removeItem(item);
-										});
-									}}
-								>
-									Remove item
-								</button>
 							</div>
+							<button
+								className="button button__secondary"
+								aria-label="remove item"
+								onClick={(e) => {
+									e.preventDefault();
+
+									(async () => await getData())().then(() => {
+										removeItem(item);
+									});
+								}}
+							>
+								X
+							</button>
 						</div>
 					))}
 					<button
@@ -255,8 +256,6 @@ const App = () => {
 				</form>
 			);
 
-		case State.sending:
-			return <p className="fadeInBottomEntrance">Doing the thing!</p>;
 		default:
 			return (
 				<p className="fadeInBottomEntrance">Woops this should never happen</p>
