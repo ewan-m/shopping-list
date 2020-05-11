@@ -7,6 +7,7 @@ export const Cat = () => {
 	useEffect(() => {
 		if (localStorage.getItem("wantsCats") === null) {
 			localStorage.setItem("wantsCats", "true");
+			setWantsToSeeCats(true);
 		}
 	});
 

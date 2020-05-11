@@ -258,9 +258,7 @@ const App = () => {
 			);
 
 		default:
-			return (
-				<p className="fadeInBottomEntrance">Woops this should never happen</p>
-			);
+			return <p>Woops this should never happen</p>;
 	}
 };
 
