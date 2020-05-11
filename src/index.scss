@@ -1,24 +1,7 @@
 @import "./variables.scss";
 
-@font-face {
-	font-family: "Font";
-	src: url(./assets/fonts/Font_Rg.woff2);
-	font-weight: 400;
-}
-@font-face {
-	font-family: "Font";
-	src: url(./assets/fonts/Font_Bd.woff2);
-	font-weight: 600;
-}
-
-@font-face {
-	font-family: "Font";
-	src: url(./assets/fonts/Font_ExBd.woff2);
-	font-weight: 800;
-}
-
 body {
-	font-family: "Font", system-ui, ui-sans-serif;
+	font-family: system-ui, ui-sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
@@ -43,7 +26,6 @@ body {
 
 .button {
 	border: none;
-	font-family: "Font";
 	font-weight: 400;
 	border-radius: 3rem;
 	cursor: pointer;
@@ -78,6 +60,12 @@ body {
 		transform: scale(1.05);
 		box-shadow: none;
 	}
+}
+
+.boldText {
+	font-weight: 800;
+	letter-spacing: -0.02rem;
+	font-size: 1.5rem;
 }
 
 .funkyOuter {
@@ -118,8 +106,6 @@ body {
 		color: #fff;
 		text-align: left;
 		font-size: 2rem;
-		font-weight: 700;
-		letter-spacing: -0.05rem;
 	}
 }
 
@@ -143,6 +129,20 @@ body {
 		background-size: cover;
 		background-image: url(./assets/images/leone-venter-VieM9BdZKFo-unsplash.jpg);
 	}
+
+	.funkyInner {
+		&::-webkit-scrollbar {
+			width: 11px;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+			border-radius: 0 0.75rem 0.75rem 0;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #3d2979;
+			border-radius: 0 0.75rem 0.75rem 0;
+		}
+	}
 }
 
 .form {
@@ -156,12 +156,6 @@ body {
 	}
 }
 
-.boldText {
-	font-weight: 600;
-	letter-spacing: -0.02rem;
-	font-size: 1.5rem;
-}
-
 .formInput {
 	margin-top: 0.375rem;
 	padding: 0.75rem;
@@ -170,7 +164,6 @@ body {
 	outline: none;
 	max-width: 225px;
 	box-sizing: content-box;
-	font-family: "Font";
 	font-weight: 400;
 }
 

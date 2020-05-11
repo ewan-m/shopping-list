@@ -267,7 +267,7 @@ const Index = () => {
 		<div className="funkyOuter">
 			<div className="funkyInner">
 				<header className="siteHeader">
-					<h1 className="siteHeader__h1 boldText">Shopping list</h1>
+					<h1 className="boldText siteHeader__h1">Shopping list</h1>
 				</header>
 				<main className="siteMain">
 					<App />
