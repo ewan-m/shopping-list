@@ -40,10 +40,11 @@ body {
 
 .button {
 	border: none;
-	font-weight: 600;
+	font-family: "Font";
+	font-weight: 400;
 	border-radius: 3rem;
 	cursor: pointer;
-	box-shadow: $shadow2px;
+	box-shadow: $shadow5px;
 	display: inline-block;
 	text-decoration: none;
 	z-index: 2;
@@ -87,13 +88,15 @@ body {
 .funkyInner {
 	overflow: auto;
 	max-width: 450px;
-	width: 100%;
+	width: calc(100vw - 3rem);
 	max-height: 900px;
-	height: 100%;
+	height: calc(100vh - 3rem);
 	background-color: #fff;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
+	border-radius: 0.75rem;
+	box-shadow: $shadow10px;
 }
 
 .siteHeader {
@@ -132,12 +135,6 @@ body {
 }
 
 @media only screen and (min-width: 450px) {
-	.funkyInner {
-		border-radius: 0.75rem;
-		height: calc(100vh - 3rem);
-		box-shadow: $shadow10px;
-	}
-
 	.funkyOuter {
 		background-size: cover;
 		background-image: url(./assets/images/leone-venter-VieM9BdZKFo-unsplash.jpg);
@@ -167,6 +164,8 @@ body {
 	outline: none;
 	max-width: 225px;
 	box-sizing: content-box;
+	font-family: "Font";
+	font-weight: 400;
 }
 
 .shoppingItem {
