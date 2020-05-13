@@ -70,7 +70,7 @@ body {
 
 .funkyOuter {
 	display: flex;
-	height: 100vh;
+	height: 100%;
 	justify-content: center;
 	align-items: center;
 	background-color: #eee;
@@ -81,7 +81,7 @@ body {
 	max-width: 450px;
 	width: calc(100vw - 3rem);
 	max-height: 900px;
-	height: calc(100vh - 3rem);
+	height: calc(100% - 3rem);
 	background-color: #fff;
 	display: flex;
 	justify-content: space-between;

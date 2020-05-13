@@ -4,21 +4,47 @@ import moment from "moment";
 import "./index.scss";
 import { Cat } from "./Cat";
 
-// const mock = {
-// 	data: [
-// 		{
-// 			name: "Do we really need milk? ",
-// 			orderedBy: "Ewan",
-// 			orderedOn: "2020-05-09T15:17:02.572Z",
-// 		},
-// 		{ name: "Milk", orderedBy: "Sofia", orderedOn: "2020-05-09T15:16:29.970Z" },
-// 		{
-// 			name: "Cherries",
-// 			orderedBy: "Ewan",
-// 			orderedOn: "2020-05-09T14:42:31.002Z",
-// 		},
-// 	],
-// };
+const starterSuggestions = [
+	"Cheese",
+	"Beer",
+	"Milk",
+	"Bread",
+	"Rice",
+	"Flour",
+	"Yeast",
+	"Pepperoni",
+	"Onions",
+	"Garlic",
+	"Sea food",
+	"Cheesecake",
+	"Jean Pierre croissants",
+	"Feta cheese",
+	"Greek yoghurt",
+	"Ham",
+	"Cereal",
+	"Peppers",
+	"Chillies",
+	"Lettuce",
+	"Parsley",
+	"Oregano",
+	"Basil",
+	"Cucumber",
+	"Olives",
+	"Tomatoes",
+	"Coconut milk",
+	"Naan",
+	"Pasta",
+	"Macaroni",
+	"Apples",
+	"Butter",
+	"Bananas",
+	"Oranges",
+	"Chicken",
+	"Beef",
+	"Potatoes",
+	"Mushrooms",
+	"Lamb",
+];
 
 interface ShoppingItem {
 	name: string;
@@ -42,12 +68,23 @@ const App = () => {
 
 	const [itemName, setItemName] = React.useState("");
 	const [itemOrderedBy, setItemOrderedBy] = React.useState("Ewan");
+	const [suggestions, setSuggestions] = React.useState(starterSuggestions);
 
 	React.useEffect(() => {
 		const pass = localStorage.getItem("password");
 		if (pass) {
 			setState(State.unAuthorised);
 			setPassword(pass);
+		}
+	}, []);
+
+	React.useEffect(() => {
+		const rememberedSuggestions = localStorage.getItem("suggestions");
+		if (rememberedSuggestions) {
+			setSuggestions([
+				...JSON.parse(rememberedSuggestions),
+				...starterSuggestions,
+			]);
 		}
 	}, []);
 
@@ -111,6 +148,17 @@ const App = () => {
 			return;
 		}
 		setState(State.addingItem);
+
+		const rememberedSuggestions = localStorage.getItem("suggestions");
+		if (rememberedSuggestions) {
+			localStorage.setItem(
+				"suggestions",
+				JSON.stringify([itemName, ...JSON.parse(rememberedSuggestions)])
+			);
+		} else {
+			localStorage.setItem("suggestions", JSON.stringify([itemName]));
+		}
+		setSuggestions([itemName, ...suggestions]);
 
 		putData(
 			[
@@ -221,6 +269,27 @@ const App = () => {
 								setItemName(e.target.value);
 							}}
 						/>
+						<div>
+							{suggestions
+								.filter(
+									(sugg) =>
+										sugg.toLowerCase().includes(itemName.toLowerCase()) &&
+										sugg.toLowerCase() !== itemName.toLowerCase()
+								)
+								.slice(0, 5)
+								.map((suggestion) => (
+									<button
+										key={suggestion}
+										className="button button__secondary"
+										onClick={() => {
+											setItemName(suggestion);
+										}}
+										style={{ marginRight: "0.375rem" }}
+									>
+										{suggestion}
+									</button>
+								))}
+						</div>
 						<select
 							className="formInput"
 							value={itemOrderedBy}
@@ -245,6 +314,7 @@ const App = () => {
 							Cancel
 						</button>
 						<button
+							type="submit"
 							className="button button__primary button--large"
 							onClick={(e) => {
 								e.preventDefault();
