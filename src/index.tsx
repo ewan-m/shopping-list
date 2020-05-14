@@ -162,6 +162,7 @@ const App = () => {
 				setItems(result.data.data);
 			}
 			setState(State.loaded);
+			setItemName("");
 		} catch (error) {
 			setState(stateOnError);
 			setError(error?.message);
