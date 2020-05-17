@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+.siteHeader {
+	background-image: $primaryGradient;
+	padding: 0.75rem;
+	position: sticky;
+	top: 0;
+	border-bottom: 1px solid $darkestGey;
+	z-index: 3;
+	box-shadow: $shadow5px;
+
+	&__h1 {
+		margin: 0;
+		color: $white;
+		text-align: left;
+		font-size: 2rem;
+	}
+}
+
+.siteMain {
+	flex-grow: 1;
+	padding: 0.75rem;
+}
+
+.siteFooter {
+	padding: 0.75rem;
+	background: $whiteTransparent;
+	color: $darkestGey;
+	position: sticky;
+	bottom: 0;
+	text-align: center;
+}

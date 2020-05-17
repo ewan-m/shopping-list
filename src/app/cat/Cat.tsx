@@ -41,7 +41,7 @@ export const Cat = () => {
 						onClick={() => {
 							setCatIndex(catIndex + 1);
 						}}
-						className="button button__secondary buttonStack"
+						className="button button__secondary button--stacked"
 					>
 						I don't like the look of this cat
 					</button>
@@ -51,7 +51,7 @@ export const Cat = () => {
 							localStorage.setItem("wantsGifs", !wantsGifs ? "true" : "false");
 							setWantsGifs(!wantsGifs);
 						}}
-						className="button button__secondary buttonStack"
+						className="button button__secondary button--stacked"
 					>
 						I'd rather see cat {wantsGifs ? "pictures" : "gifs"} instead
 					</button>
@@ -60,7 +60,7 @@ export const Cat = () => {
 							localStorage.setItem("wantsCats", "false");
 							setWantsToSeeCats(false);
 						}}
-						className="button button__secondary buttonStack"
+						className="button button__secondary button--stacked"
 					>
 						I don't want to see any cats
 					</button>

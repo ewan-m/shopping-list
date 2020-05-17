@@ -1,0 +1,14 @@
+.shoppingItem {
+	margin: 0 0 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	&__header {
+		margin: 0;
+	}
+
+	&__info {
+		margin: 0;
+	}
+}
